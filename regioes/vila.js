@@ -1,4 +1,3 @@
-const heroi = require("../heroi")
 const prompt = require("prompt-sync")()
 
 function vila(heroi) {
