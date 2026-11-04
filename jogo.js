@@ -28,9 +28,9 @@ while (jogando) {
     console.log("Você caiu no caminho. Fim de jogo.");
     jogando = false;
 
-  if (local === "vila")(
-    local = vila/heroi
-  )
+  } else if (local === "vila"){
+      local = vila/heroi
+  
    
   } else if (local === "floresta") {
     console.log("");
