@@ -3,8 +3,10 @@
 // Só uma coisa é nova: Math.random(), que sorteia um número entre 0 e 1.
 const prompt = require("prompt-sync")();
 const heroi = require("./heroi"); 
-const sorte = require("./sistemas/sorte");
 const vila = require("./regioes/vila");
+const floresta = require("./regioes/floresta");
+const poco = require("./regioes/poco");
+const ponte = require("./regioes/ponte");
 
 
 // ===== CONTROLE DO JOGO =====
@@ -27,61 +29,19 @@ while (jogando) {
   if (heroi.vida <= 0) {
     console.log("Você caiu no caminho. Fim de jogo.");
     jogando = false;
+  }
+  if (local === "vila") {
+    local = vila(heroi)
 
-  if (local === "vila")(
-    local = vila/heroi
-  )
-   
   } else if (local === "floresta") {
-    console.log("");
-    console.log("[FLORESTA] Galhos fechados. Algo se mexe no chão.");
+    local = floresta(heroi)
    
-    if (sorte(0.4)) {
-      console.log("Uma aranha te morde! Você está envenenado por 3 passos.");
-      veneno = 3;
-    } else {
-      console.log("Era só o vento.");
-    }
-    console.log("1 - seguir para a ponte   2 - voltar para a vila");
-    let escolha = prompt("> ");
-    if (escolha === "1") {
-      local = "ponte";
-    } else if (escolha === "2") {
-      local = "vila";
-    }
   } else if (local === "poco") {
-    console.log("");
-    console.log("[POÇO] Um poço antigo. Não dá para ver o fundo.");
-    console.log("1 - voltar para a vila   2 - beber água (recupera 3 de vida)");
-    if (heroi.inventario.includes("moeda furada")) {
-      console.log("3 - jogar a moeda furada no poço");
-    }
-    let escolha = prompt("> ");
-    if (escolha === "1") {
-      local = "vila";
-    } else if (escolha === "2") {
-      heroi.vida = Math.min(heroi.vida + 3, heroi.vidaMaxima)
-      console.log("A água é gelada. Vida: " + heroi.vida);
-    } else if (escolha === "3" && heroi.inventario.includes("moeda furada")) {
-      console.log("A moeda cai sem fazer barulho. Uma corda sobe do fundo do poço, sozinha.");
-      heroi.inventario.shift()
-      heroi.inventario.push("corda");
-      console.log("Inventário: " + heroi.inventario);
-    }
+    local = poco(heroi)
+
   } else if (local === "ponte") {
-    console.log("");
-    console.log("[PONTE] A ponte para o farol caiu. Do outro lado, o farol apagado.");
-    if (heroi.inventario.includes("corda")) {
-      console.log("1 - amarrar a corda e atravessar   2 - voltar para a floresta");
-    } else {
-      console.log("Não tem como atravessar.   2 - voltar para a floresta");
-    }
-    let escolha = prompt("> ");
-    if (escolha === "1" && heroi.inventario.includes("corda")) {
-      local = "farol";
-    } else if (escolha === "2") {
-      local = "floresta";
-    }
+    local = ponte(heroi)
+
   } else if (local === "farol") {
     console.log("");
     console.log("[FAROL] Você sobe a escada e acende a luz. Lá embaixo, os barcos voltam para casa.");
